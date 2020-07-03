@@ -22,8 +22,22 @@ public:
         , parent_(nullptr)
         , l_child_(nullptr)
         , r_child_(nullptr)
-    {
+    { }
 
+    ~rb_tree_node()
+    {
+        if(!parent_)
+        {
+            delete parent_;
+        }
+        if(!l_child_)
+        {
+            delete l_child_;
+        }
+        if(!r_child_)
+        {
+            delete r_child_;
+        }
     }
 
 public:
@@ -38,17 +52,23 @@ template<typename T>
 class rb_tree
 {
 public:
-    typedef T			        value_type;
-    typedef const value_type&	const_ref_type;
-    typedef rb_tree_node<T>		node_value_type;
-    typedef rb_tree_node<T>*	node_pointer;
-    typedef const node_pointer	const_node_pointer; // 指向const的指针
+    typedef T                           value_type;
+    typedef const value_type&           const_ref_type;
+    typedef rb_tree_node<T>             node_value_type;
+    typedef rb_tree_node<T>*            node_pointer;
+    typedef const node_pointer          const_node_pointer; // 指向const的指针
 
 public:
     rb_tree()
     : root_(nullptr)
-    {
+    { }
 
+    ~rb_tree()
+    {
+        if(root_ == nullptr)
+        {
+            delete root_;
+        }
     }
 
     int insert(const_ref_type data)
@@ -192,6 +212,7 @@ private:
                 }
 
                 this->adjust_delete_balance(pp, p);
+
                 if (fake_null)
                 {
                     if (fake_null->parent_->l_child_ == fake_null)
